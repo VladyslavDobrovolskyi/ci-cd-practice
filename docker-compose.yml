@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    jenkins:
+        build: .
+        container_name: jenkins-docker
+        ports:
+            - '8080:8080' # Порт для доступа к Jenkins
+            - '50000:50000' # Порт для агента Jenkins
+        volumes:
+            - ./jenkins_home:/var/jenkins_home # Сохраняем данные Jenkins на локальном диске
+            - /var/run/docker.sock:/var/run/docker.sock # Передаем доступ к Docker
+
+        environment:
+            - JENKINS_ADMIN_ID=admin # Логин администратора
+            - JENKINS_ADMIN_PASSWORD=admin # Пароль администратора
+
+        restart: unless-stopped
